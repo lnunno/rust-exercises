@@ -37,8 +37,17 @@ fn test_circle() {
 
 // Define struct Rect here, and implement Shape for it. Then remove the
 // #[cfg(skip)] above test_rect and test_union and use 'cargo test' to test it.
+struct Rect {
+    ll: (f32, f32), //Lower-left
+    ur: (f32, f32)  //Upper-right
+}
 
-#[cfg(skip)]
+impl Shape for Rect {
+    fn contains(&self, pt: (f32, f32)) -> bool {
+        return (pt.0 >= self.ll.0) && (pt.1 >= self.ll.1) && (pt.0 <= self.ur.0) && (pt.1 <= self.ur.1);
+    }
+}
+
 #[test]
 fn test_rect() {
     assert!( Rect { ll: (2.,2.), ur: (4., 5.) }.contains((2., 2.)));
@@ -63,7 +72,6 @@ impl Shape for Union {
     }
 }
 
-#[cfg(skip)]  // Delete this once you've defined Rect.
 #[test]
 fn test_union() {
     let c = Circle { center: (0., 2.), radius: 2. };
@@ -87,8 +95,16 @@ fn test_union() {
 
 // Define struct Complement here, and implement Shape for it. Then remove the
 // #[cfg(skip)] above test_rect and use 'cargo test' to test it.
+struct Complement {
+    s: Box<Shape>
+}
 
-#[cfg(skip)]
+impl Shape for Complement {
+    fn contains(&self, pt: (f32, f32)) -> bool {
+        return !self.s.contains(pt);
+    }
+}
+
 #[test]
 fn test_complement() {
     let c = Circle { center: (0., 2.), radius: 2. };
@@ -116,7 +132,7 @@ fn test_complement() {
 
 #[cfg(skip)]
 fn intersection(s1: Box<Shape>, s2: Box<Shape>) -> Box<Shape> {
-    // ...
+    // c_s1 = Complement(s1)
 }
 
 #[cfg(skip)]

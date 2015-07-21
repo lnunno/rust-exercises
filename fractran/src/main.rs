@@ -81,12 +81,22 @@ fn test_step() {
 
 // Finally, delete the #[cfg(skip)] over main, and implement a 'run' function
 // analogous to the one in model.py.
+fn run(fs: Vec<(u64, u64)>, n : u64, limit : u64) -> () {
+    for i in 0..limit {
+        match step(&fs, n) {
+            Some(result) => 
+                if is_power_of_two(result){
+                  println!("*** {}", floor_log2(result));   
+                },
+            None => return
+        }
+    }
+}
 
-#[cfg(skip)]
 fn main() {
     // Each pair (n, d) represents the fraction n/d.
     // These fractions are all in lowest terms.
-    v = vec![(17, 91),
+    let v = vec![(17, 91),
              (78, 85),
              (19, 51),
              (23, 38),
