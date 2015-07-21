@@ -1,3 +1,8 @@
+// Define is_power_of_two here, so that test_is_power_of_two passes.
+fn is_power_of_two(n : u64) -> bool {
+    n != 0 && (n - 1) & n == 0
+}
+
 #[test]
 fn test_is_power_of_two() {
     assert!(!is_power_of_two(0u64));
@@ -11,7 +16,17 @@ fn test_is_power_of_two() {
     assert!( is_power_of_two(8));
 }
 
-#[cfg(skip)] // Delete this line when you're ready to test your floor_log2.
+fn floor_log2(n : u64) -> u64{
+    assert!(n > 0);
+    let mut log = 0;
+    let mut m = n;
+    while m > 1 {
+        m = m >> 1;
+        log += 1;        
+    }
+    return log;
+}
+
 #[test]
 fn test_floor_log2() {
     assert_eq!(floor_log2(1u64), 0);
@@ -45,8 +60,15 @@ fn test_floor_log2() {
 
 // The type of the vector argument to step should be: &Vec<(u64, u64)>.
 // This passes the vector by reference, not value.
+fn step(fs: &Vec<(u64, u64)>, n: u64 ) -> Option<u64> {
+    for &(a,b) in fs {
+        if n % b == 0 {
+            return Some(n / b * a);
+        }
+    }
+    return None;
+}
 
-#[cfg(skip)] // Delete this line when you're ready to test your 'step' function.
 #[test]
 fn test_step() {
     assert_eq!(step(&vec![], 0), None);

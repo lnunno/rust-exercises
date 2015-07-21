@@ -4,6 +4,9 @@ fn main() {
 }
 
 // Define is_power_of_two here, so that test_is_power_of_two passes.
+fn is_power_of_two(n : u64) -> bool {
+    n != 0 && (n - 1) & n == 0
+}
 
 #[test]
 fn test_is_power_of_two() {
